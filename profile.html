@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - SLA Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-gradient-to-b from-blue-800 to-indigo-900 text-white w-64 transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed md:relative h-screen z-20">
+            <div class="p-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-handshake text-xl"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">SLA Dashboard</h1>
+                </div>
+                
+                <div class="mt-8">
+                    <div class="text-xs uppercase text-blue-300 font-semibold tracking-wider mb-4">Menu Utama</div>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="tickets.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-ticket-alt"></i><span>Manajemen Tiket</span></a></li>
+                        <li><a href="sla-monitoring.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-clock"></i><span>Monitoring SLA</span></a></li>
+                        <li><a href="reporting.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-chart-bar"></i><span>Laporan</span></a></li>
+                        <li><a href="master-data.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-database"></i><span>Master Data</span></a></li>
+                        <li><a href="profile.html" class="flex items-center space-x-3 p-3 rounded-lg bg-blue-700/50"><i class="fas fa-user-circle"></i><span>Profil</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-blue-700">
+                    <button id="logoutBtn" type="button" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition">
+                        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto">
+            <!-- Top Navigation -->
+            <nav class="bg-white shadow sticky top-0 z-10">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <button id="menuToggle" class="md:hidden text-gray-700"><i class="fas fa-bars text-2xl"></i></button>
+                    <h2 class="text-2xl font-bold text-gray-800">Profil Pengguna</h2>
+                    <div class="flex items-center space-x-4">
+                        <span id="currentTime" class="text-gray-600 font-medium"></span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Profile Card -->
+                    <div class="md:col-span-1">
+                        <div class="bg-white rounded-lg shadow p-6 text-center">
+                            <img src="https://via.placeholder.com/120" alt="Avatar" class="w-20 h-20 rounded-full mx-auto mb-4">
+                            <h3 id="userName" class="text-xl font-semibold text-gray-800">--</h3>
+                            <p id="userRole" class="text-gray-600 mb-4">--</p>
+                            <div class="space-y-2 text-sm text-gray-600">
+                                <p><i class="fas fa-envelope mr-2"></i><span id="userEmail">--</span></p>
+                                <p><i class="fas fa-building mr-2"></i><span id="userDept">--</span></p>
+                                <p><i class="fas fa-clock mr-2"></i>Login: <span id="loginTime">--</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Details -->
+                    <div class="md:col-span-2">
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-lg font-semibold mb-6">Informasi Profil</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                                    <input type="text" id="fullName" class="w-full px-4 py-2 border rounded-lg bg-gray-50" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg bg-gray-50" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                                    <input type="text" id="role" class="w-full px-4 py-2 border rounded-lg bg-gray-50" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Ubah Password</label>
+                                    <input type="password" id="newPassword" placeholder="Password baru" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <button id="saveProfileBtn" type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
+                                    <i class="fas fa-save mr-2"></i>Simpan Perubahan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="mt-6 bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Riwayat Aktivitas</h3>
+                    <div class="space-y-3" id="activityLog">
+                        <p class="text-gray-600 text-center py-8">Tidak ada aktivitas</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Overlay -->
+        <div id="overlay" class="hidden fixed inset-0 bg-black/50 md:hidden z-10"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

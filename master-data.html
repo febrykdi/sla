@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Data - SLA Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-gradient-to-b from-blue-800 to-indigo-900 text-white w-64 transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed md:relative h-screen z-20">
+            <div class="p-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-handshake text-xl"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">SLA Dashboard</h1>
+                </div>
+                
+                <div class="mt-8">
+                    <div class="text-xs uppercase text-blue-300 font-semibold tracking-wider mb-4">Menu Utama</div>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                        <li><a href="tickets.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-ticket-alt"></i><span>Manajemen Tiket</span></a></li>
+                        <li><a href="sla-monitoring.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-clock"></i><span>Monitoring SLA</span></a></li>
+                        <li><a href="reporting.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-chart-bar"></i><span>Laporan</span></a></li>
+                        <li><a href="master-data.html" class="flex items-center space-x-3 p-3 rounded-lg bg-blue-700/50"><i class="fas fa-database"></i><span>Master Data</span></a></li>
+                        <li><a href="profile.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700/30"><i class="fas fa-user-circle"></i><span>Profil</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-blue-700">
+                    <button id="logoutBtn" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition">
+                        <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto">
+            <!-- Top Navigation -->
+            <nav class="bg-white shadow sticky top-0 z-10">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <button id="menuToggle" class="md:hidden text-gray-700"><i class="fas fa-bars text-2xl"></i></button>
+                    <h2 class="text-2xl font-bold text-gray-800">Master Data</h2>
+                    <div class="flex items-center space-x-4">
+                        <span id="currentTime" class="text-gray-600 font-medium"></span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="p-6">
+                <!-- Tab Navigation -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="flex border-b">
+                        <button onClick="switchTab('services')" class="tab-btn flex-1 px-6 py-3 text-center font-medium text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-300 active">
+                            <i class="fas fa-cog mr-2"></i>Kategori Layanan
+                        </button>
+                        <button onClick="switchTab('technicians')" class="tab-btn flex-1 px-6 py-3 text-center font-medium text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-300">
+                            <i class="fas fa-users mr-2"></i>Teknisi
+                        </button>
+                        <button onClick="switchTab('policies')" class="tab-btn flex-1 px-6 py-3 text-center font-medium text-gray-600 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-300">
+                            <i class="fas fa-scroll mr-2"></i>Kebijakan SLA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Services Tab -->
+                <div id="services-tab" class="tab-content">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold">Kategori Layanan</h3>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-plus mr-2"></i>Tambah
+                            </button>
+                        </div>
+                        <table class="w-full">
+                            <thead class="bg-gray-100 border-b">
+                                <tr>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Nama Layanan</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">SLA Hours</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Prioritas</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="servicesTable" class="divide-y">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Technicians Tab -->
+                <div id="technicians-tab" class="tab-content hidden">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold">Data Teknisi</h3>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-plus mr-2"></i>Tambah
+                            </button>
+                        </div>
+                        <table class="w-full">
+                            <thead class="bg-gray-100 border-b">
+                                <tr>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Nama</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Email</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Spesialisasi</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Status</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="techniciansTable" class="divide-y">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Policies Tab -->
+                <div id="policies-tab" class="tab-content hidden">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-semibold">Kebijakan SLA</h3>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-plus mr-2"></i>Tambah
+                            </button>
+                        </div>
+                        <table class="w-full">
+                            <thead class="bg-gray-100 border-b">
+                                <tr>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Nama Kebijakan</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Deskripsi</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Target</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="policiesTable" class="divide-y">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Overlay -->
+        <div id="overlay" class="hidden fixed inset-0 bg-black/50 md:hidden z-10"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/auth.js"></script>
+    <script src="data/sample-data.js"></script>
+    <script src="data/database.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/master-data.js"></script>
+</body>
+</html>
